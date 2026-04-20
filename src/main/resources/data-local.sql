@@ -1,0 +1,10 @@
+INSERT INTO product (name, stock) VALUES ('아이스크림', 3);
+INSERT INTO product (name, stock) VALUES ('카페라떼', 7);
+INSERT INTO product (name, stock) VALUES ('바닐라라떼', 1);
+INSERT INTO product (name, stock) VALUES ('콜드블루', 9);
+INSERT INTO product (name, stock) VALUES ('모카', 5);
+INSERT INTO product (name, stock) VALUES ('에스프레소', 2);
+INSERT INTO product (name, stock) VALUES ('그린티', 8);
+INSERT INTO product (name, stock) VALUES ('블랙티', 4);
+INSERT INTO product (name, stock) VALUES ('레몬에이드', 6);
+INSERT INTO product (name, stock) VALUES ('꿀커피', 0);
