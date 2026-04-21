@@ -1,10 +1,10 @@
 package com.example.basic.application.order.service;
 
 import com.example.basic.application.order.cmd.OrderCreateCmd;
-import com.example.basic.domian.order.entity.Order;
-import com.example.basic.domian.order.repository.OrderRepository;
-import com.example.basic.domian.product.entity.Product;
-import com.example.basic.domian.product.repository.ProductRepository;
+import com.example.basic.domain.order.entity.Order;
+import com.example.basic.domain.order.repository.OrderRepository;
+import com.example.basic.domain.product.entity.Product;
+import com.example.basic.domain.product.repository.ProductRepository;
 import com.example.basic.global.common.DomainException;
 import com.example.basic.global.common.ErrorCode;
 import lombok.RequiredArgsConstructor;

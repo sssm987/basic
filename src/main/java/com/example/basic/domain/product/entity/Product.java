@@ -1,4 +1,4 @@
-package com.example.basic.domian.product.entity;
+package com.example.basic.domain.product.entity;
 
 import com.example.basic.global.common.DomainException;
 import com.example.basic.global.common.ErrorCode;
@@ -19,6 +19,9 @@ public class Product {
 
     @Column(name = "stock")
     private Long stock;
+
+    @Column(name = "initiative_stock")
+    private Long initiativeStock;
 
     public void decrease(){
         if(stock > 0){

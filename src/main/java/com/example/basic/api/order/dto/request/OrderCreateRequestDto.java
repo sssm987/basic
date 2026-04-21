@@ -1,4 +1,4 @@
-package com.example.basic.api.order.dto;
+package com.example.basic.api.order.dto.request;
 
 import com.example.basic.application.order.cmd.OrderCreateCmd;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class OrderCreateDto {
+public class OrderCreateRequestDto {
     @Schema(description = "상품번호", example = "1", hidden = false)
     private Long productId;
     @Schema(description = "회원번호", example = "1", hidden = false)

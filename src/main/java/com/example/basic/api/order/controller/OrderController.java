@@ -1,6 +1,6 @@
 package com.example.basic.api.order.controller;
 
-import com.example.basic.api.order.dto.OrderCreateDto;
+import com.example.basic.api.order.dto.request.OrderCreateRequestDto;
 import com.example.basic.application.order.service.OrderService;
 import com.example.basic.global.common.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/vi/order")
+@RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
 @Tag(name = "주문 컨트롤러")
 public class OrderController {
@@ -31,7 +31,7 @@ public class OrderController {
             @ApiResponse(responseCode = "500", description = "서버 내부 오류",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public void create(@RequestBody OrderCreateDto dto){
+    public void create(@RequestBody OrderCreateRequestDto dto){
         orderService.create(dto.toCommand());
     }
 

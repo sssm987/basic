@@ -1,11 +1,9 @@
-package com.example.basic.domian.order.entity;
-import com.example.basic.domian.product.entity.Product;
+package com.example.basic.domain.order.entity;
+import com.example.basic.domain.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
