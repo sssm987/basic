@@ -8,6 +8,7 @@ import com.example.basic.domain.product.repository.ProductRepository;
 import com.example.basic.global.common.DomainException;
 import com.example.basic.global.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Synchronize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void create(OrderCreateCmd cmd){
+    public synchronized void create(OrderCreateCmd cmd){
         Product product = productRepository.findProductsById(cmd.getProductId())
                 .orElseThrow(() -> new DomainException(ErrorCode.PRODUCT_NOT_FOUND));
 

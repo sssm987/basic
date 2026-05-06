@@ -33,4 +33,20 @@ public class ProductQueryRepositoryImpl {
                 .fetch();
     }
 
+    public ProductOrdersSelectResponseDTO productOrdersSelect(Long productId){
+        return queryFactory
+                .select(Projections.fields(
+                        ProductOrdersSelectResponseDTO.class,
+                        product.id.as("productId"),
+                        order.id.count().as("orderCount"),
+                        product.stock,
+                        product.initiativeStock
+                ))
+                .from(product)
+                .leftJoin(order).on(order.product.eq(product))
+                .where(product.id.eq(productId))
+                .groupBy(product.id, product.stock, product.initiativeStock)
+                .fetchOne();
+    }
+
 }
