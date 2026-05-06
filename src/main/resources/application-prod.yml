@@ -11,3 +11,7 @@ spring:
       hibernate:
         format_sql: false
     show-sql: false
+
+management:
+  server:
+    port: 8080

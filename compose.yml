@@ -1,0 +1,91 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: basic-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: basic
+      POSTGRES_USER: basic_user
+      POSTGRES_PASSWORD: basic_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U basic_user -d basic"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: basic-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://postgres:5432/basic
+      DB_USERNAME: basic_user
+      DB_PASSWORD: basic_pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    container_name: basic-postgres-exporter
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATA_SOURCE_URI: postgres:5432/basic?sslmode=disable
+      DATA_SOURCE_USER: basic_user
+      DATA_SOURCE_PASS: basic_pass
+    ports:
+      - "9187:9187"
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: basic-node-exporter
+    restart: unless-stopped
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "9100:9100"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: basic-prometheus
+    restart: unless-stopped
+    depends_on:
+      - app
+      - postgres-exporter
+      - node-exporter
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: basic-grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+
+volumes:
+  postgres_data:
+  grafana_data:
