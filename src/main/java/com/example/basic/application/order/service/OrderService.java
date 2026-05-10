@@ -1,6 +1,8 @@
 package com.example.basic.application.order.service;
 
 import com.example.basic.application.order.cmd.OrderCreateCmd;
+import com.example.basic.domain.inventory.entity.Inventory;
+import com.example.basic.domain.inventory.repository.InventoryRepository;
 import com.example.basic.domain.order.entity.Order;
 import com.example.basic.domain.order.repository.OrderRepository;
 import com.example.basic.domain.product.entity.Product;
@@ -18,10 +20,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final InventoryRepository inventoryRepository;
 
     @Transactional
     public void create(OrderCreateCmd cmd){
-        Product product = productRepository.findProductsById(cmd.getProductId())
+        Inventory inventory = inventoryRepository.findByProductId(cmd.getProductId())
                 .orElseThrow(() -> new DomainException(ErrorCode.PRODUCT_NOT_FOUND));
 
         product.decrease();
