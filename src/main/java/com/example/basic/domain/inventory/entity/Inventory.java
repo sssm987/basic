@@ -21,7 +21,7 @@ public class Inventory {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "stock")
+    @Column(name = "stock", nullable = false)
     private Long stock;
 
     @Column(name = "initiative_stock")
@@ -30,6 +30,9 @@ public class Inventory {
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Version
+    private Long version;
 
     public void decrease(){
         if(stock > 0){

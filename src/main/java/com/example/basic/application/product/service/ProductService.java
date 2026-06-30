@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProductService {
-    private final ProductRepository productRepository;
     private final ProductQueryRepositoryImpl productQueryRepository;
 
     public List<ProductOrdersSelectResponseDTO> productOrdersSelect(){

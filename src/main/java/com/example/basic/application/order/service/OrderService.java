@@ -27,7 +27,9 @@ public class OrderService {
         Inventory inventory = inventoryRepository.findByProductId(cmd.getProductId())
                 .orElseThrow(() -> new DomainException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        product.decrease();
+        inventory.decrease();
+
+        Product product = productRepository.getReferenceById(cmd.getProductId());
 
         Order order = Order.create(cmd.getMemberId(),product);
         orderRepository.save(order);

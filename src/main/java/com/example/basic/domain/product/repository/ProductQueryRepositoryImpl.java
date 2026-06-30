@@ -1,6 +1,7 @@
 package com.example.basic.domain.product.repository;
 
 import com.example.basic.api.product.dto.response.ProductOrdersSelectResponseDTO;
+import com.example.basic.domain.inventory.entity.QInventory;
 import com.example.basic.domain.order.entity.QOrder;
 import com.example.basic.domain.product.entity.QProduct;
 import com.querydsl.core.types.Projections;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ProductQueryRepositoryImpl {
     private final QOrder order = QOrder.order;
     private final QProduct product = QProduct.product;
+    private final QInventory inventory = QInventory.inventory;
     private final JPAQueryFactory queryFactory;
 
 
@@ -24,12 +26,13 @@ public class ProductQueryRepositoryImpl {
                         ProductOrdersSelectResponseDTO.class,
                         product.id.as("productId"),
                         order.id.count().as("orderCount"),
-                        product.stock,
-                        product.initiativeStock
+                        inventory.stock,
+                        inventory.initiativeStock
                 ))
                 .from(product)
                 .leftJoin(order).on(order.product.eq(product))
-                .groupBy(product.id, product.stock, product.initiativeStock)
+                .leftJoin(inventory).on(inventory.product.eq(product))
+                .groupBy(product.id, inventory.stock, inventory.initiativeStock)
                 .fetch();
     }
 
