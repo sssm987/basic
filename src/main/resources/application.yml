@@ -3,9 +3,6 @@ spring:
     name: demo
   profiles:
     default: local
-  redis:
-    host: 192.168.0.49
-    port: 6379
 
 management:
   endpoints:
